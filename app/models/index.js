@@ -23,7 +23,8 @@ const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-    
+
+module.exports = db;
     
 
     
