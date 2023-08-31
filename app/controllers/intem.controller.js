@@ -46,10 +46,6 @@ exports.findAll = (req, res) => {
     });
 };
 
-        
-        
-
-
 exports.findOne = (req, res) => {
     const id = req.params.id;  
 
@@ -69,8 +65,6 @@ exports.findOne = (req, res) => {
         });
     });
 };
-
-
 
 exports.update = (req, res) => {
     const id = req.params.id;
@@ -119,15 +113,34 @@ exports.delete = (req, res) => {
         message: "Ocorreu um erro ao tentar apagar o item com o id=" + id
     });
 });
+}
     
-
-
 exports.deleteAll = (req, res) => {
-    // ...
+    Item.destroy({
+        where: {},
+        truncate: false
+    })
+    .then(nums => {
+        res.send({ message: `${nums} itens foram apagados com sucesso.` });
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: err.message || "Algum erro ocorreu ao tentar apagar todos os itens."
+        });
+    });
 };
 
 exports.findAllFlammables = (req, res) => {
-   
-}
-
+    Item.findAll({ where: { is_Flammable: true } })
+    .then(data => {
+        res.send(data);
+    })
+     .catch(err => {
+     res.status(500).send({
+         message:
+         err.message || "Algum erro ocorreu ao tentar pesquisar todos os itens inflamáveis."
+ 
+     });
+     });
+ 
 };
